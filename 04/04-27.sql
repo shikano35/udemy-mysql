@@ -2,30 +2,39 @@ SELECT DATABASE();
 
 use my_db;
 
-# テーブル作成
-CREATE TABLE people(
-  id INT PRIMARY KEY,
-  name VARCHAR(50),
-  birth_day DATE DEFAULT "1990-01-01"
-);
+SHOW TABLES;
 
-# INSERT 1
-INSERT INTO people VALUES(1,"Taro","2001-01-01");
-
-#SELECT
+#全レコード、全カラム
 SELECT * FROM people;
 
-# INSERT カラム指定で挿入
-INSERT INTO people(id,name) VALUES(2,"Jiro");
+# カラム一部（カンマで区切ることで複数取得可能）
+SELECT name,id,birth_day,name FROM people;
 
-# シングルクォート
-INSERT INTO people(id,name) VALUES(3,'Saburo');
+# 名前変更
+SELECT id AS "番号",name AS "名前" FROM people;
 
-# シングルクォートを重ねることで'を実行可能
-INSERT INTO people VALUES(4,'John''s son','2021-01-01');
+# WHERE句（5未満を取得)
+SELECT * FROM people WHERE id<5;
 
-# ダブルクォートは問題ない
-INSERT INTO people VALUES(5,'John"s son','2021-01-01');
+# Jiroのみ取得
+SELECT * FROM people WHERE name="Jiro";
 
-# "の中に"
-INSERT INTO people VALUES(6,"John""s son",'2021-01-01');
+# UPDATE文
+UPDATE people SET birth_day="1900-01-01",name="";
+
+SELECT * FROM people;
+
+# UPDATE where (idが3のところを更新)
+UPDATE people SET name="Taro",birth_day="2000-01-01" WHERE id=3;
+
+# UPDATE where (idが4より大きいところを更新)
+UPDATE people SET name="Jiro",birth_day="2000-01-01" WHERE id>4;
+
+# DELETE : レコード削除(idが2のところを削除)
+DELETE FROM people WHERE id=2;
+
+# idが4より大きいところを削除
+DELETE FROM people WHERE id>4;
+
+# 全て削除
+DELETE FROM people;
